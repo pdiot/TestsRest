@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	
+
+	<title>Test API REST</title>
+</head>
+<body>
+	<div class="container">
+		<div class="card text-center">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-sm">
+						Affichage des données
+					</div>			
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<button class="btn btn-main" onclick="drawAppartements()">
+						Appartements
+						</button>
+					</div>
+					<div class="col-sm-3">
+						<button class="btn btn-main" onclick="drawMaisons()">
+						Maisons
+						</button>
+					</div>
+					<div class="col-sm-3">
+						<button class="btn btn-main" onclick="drawClients()">
+						Clients
+						</button>
+					</div>
+					<div class="col-sm-3">
+						<button class="btn btn-main" onclick="drawImmeubles()">
+						Immeubles
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<table class="table" id="valueTable">
+					<thead>
+					</thead>
+					<tbody>
+					</tbody>
+				
+				
+				</table>
+			</div>
+			<div class="card-footer text-muted">
+				<div class="row">
+					<div class="col-sm-3">
+						Créer Appartement
+					</div>
+					<div class="col-sm-3">
+						Créer Maison
+					</div>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalClients" id="createClientModalButton">
+							Créer client
+						</button>
+					</div>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalImmeubles" id="createImmeubleModalButton">
+						Créer Immeuble
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Button trigger modal -->
+	
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalClients" tabindex="-1" role="dialog" aria-labelledby="modalClientsLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalClientsLabel">Création de client</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="clientCreate">
+					<form>
+						<div class="form-row">
+							<div class="form-group col-md"id="row_id_client" style="visibility: hidden">
+								<label for="inputIDClient">ID</label>
+								<input type="text" class="form-control" id="inputIDClient" placeholder="identifiant client" readonly >
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="inputNomClient">Nom</label>
+								<input type="text" class="form-control" id="inputNomClient" placeholder="Nom">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="inputPrenomClient">Prenom</label>
+								<input type="text" class="form-control" id="inputPrenomClient" placeholder="Prenom">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md">
+								<label for="inputAdresseClient">Adresse</label>
+								<input type="text" class="form-control" id="inputAdresseClient" placeholder="qqpart rue du cul">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="clientCancelButton" onclick="clientReset()">Annuler</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="clientValidateButton" onclick="createClient()">Créer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="modalImmeubles" tabindex="-1" role="dialog" aria-labelledby="modalImmeublesLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalImmeublesLabel">Création d'immeuble'</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="immeubleCreate">
+					<form>
+						<div class="form-row">
+							<div class="form-group col-md"id="row_id_immeuble" style="visibility: hidden">
+								<label for="inputIDImmeuble">ID</label>
+								<input type="text" class="form-control" id="inputIDImmeuble" placeholder="identifiant immeuble" readonly >
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="inputAdresseImmeuble">Adresse</label>
+								<input type="text" class="form-control" id="inputAdresseImmeuble" placeholder="Adresse">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="inputCodeImmeuble">Code Postal</label>
+								<input type=number class="form-control" id="inputCodeImmeuble" placeholder="Code Postal">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="immeubleCancelButton" onclick="immeubleReset()">Annuler</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="immeubleValidateButton" onclick="createImmeuble()">Créer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalAjoutAppartementsImmeuble" tabindex="-1" role="dialog" aria-labelledby="modalAjoutAppartementsImmeubleLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAjoutAppartementsImmeubleLabel">Ajouter un appartement à l'immeuble</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="ajoutAppartementsImmeuble">
+					<form>
+						
+						<div class="form-row" id="row_id_immeuble_2" style="visibility: hidden">
+							<div class="form-group col-md">
+								<input type="text" id="inputIDImmeuble" readonly >
+							</div>
+						</div>
+						
+						<div class="form-row">
+							<div class="form-group col-md">
+								
+								<select class="custom-select" id="appartementAjoutSelect" >
+								<option selected>Choose...</option>
+							  	</select>
+								
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" >Annuler</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="ajoutApptValide" onclick="pushAppartementImmeuble()">Ajouter</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	
+	<script src="main.js"></script>
+</body>
+</html>
